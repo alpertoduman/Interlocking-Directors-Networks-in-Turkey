@@ -1,0 +1,187 @@
+---
+title: "Interlocking Directors Network in BIST"
+author: "Alper Duman"
+format: beamer
+editor: visual
+---
+
+## Introduction
+
+-   Corporate governance structures can enhance the economic performances of corporations and influence the institutional settings in which the corporations thrive or struggle.
+
+-   Corporate board networks play central roles in corporate governance structures.
+
+-   Turkey is also interesting case as it is characterized by a mixed system of bank and market based credit system and "insider" corporate governance regime.
+
+-   Dominant diversified business groups own and control major banks and state managed corporations still play decisive roles
+
+## Contribution
+
+-   We provide a detailed analysis of the interlocking board of directors of Turkish listed firms using tools of social network analysis and its implications from a network perspective
+
+-   We construct both firm and director networks in 2023
+
+-   We identify the central players in the Turkish corporate sector by virtue of their position and ties in the network of inter-locking directors and firms.
+
+-   We compare the cohesiveness in the Turkish case with other country cases.
+
+## Data
+
+-   We web scrape data from <https://kap.gov.tr>
+
+-   We use Selenium package.
+
+-   The code will be available on my github page.
+
+-   The data had to be cleaned up.
+
+## Network Analysis
+
+-   A network is bipartite if its nodes can be partitioned into two sets such that all edges are between the nodes in partitioned sets and there are no links between nodes within each set.
+
+-   An edge (or a link) in this graph connects an individual to a firm, indicating that the individual either has a seat on the board of directors of the firm
+
+-   It is of course possible that an individual can have seats in different firms, thus have multiple links.
+
+-   The raw data, which consists of firms and board members of these firms, will lead to a bipartite network in which nodes are partitioned according to whether they are individuals or firms.
+
+## Bipartite Network Ex
+
+```{r, engine='tikz'}
+
+
+
+\begin{tikzpicture}[shorten >=1pt]
+		\tikzstyle{vertex}=[]
+		\node[vertex] (F-1) at (-1,3) {\emph{firm 1}};
+		\node[vertex] (F-2) at (2,3) {\emph{firm 2}};
+		\node[vertex] (F-3) at (5,3) {\emph{firm 3}};
+		\node[vertex] (I-1) at (-3,0) {\emph{indv 1}};
+		\node[vertex] (I-2) at (-1,0) {\emph{indv 2}};
+		\node[vertex] (I-3) at (1,0) {\emph{indv 3}};
+		\node[vertex] (I-4) at (3,0) {\emph{indv 4}};
+		\node[vertex] (I-5) at (5,0) {\emph{indv 5}};
+		\node[vertex] (I-6) at (7,0) {\emph{indv 6}};
+		\draw (I-1) -- (F-1);
+		\draw (I-2) -- (F-1);
+		\draw (I-2) -- (F-2);
+		\draw (I-3) -- (F-2);
+		\draw (I-3) -- (F-1);
+		\draw (I-4) -- (F-2);
+		\draw (I-4) -- (F-3);
+		\draw (I-5) -- (F-3);
+		\draw (I-5) -- (F-1);
+		\draw (I-6) -- (F-3);	
+\end{tikzpicture}
+
+
+```
+
+## Analysis
+
+-   We get projections: Firm and Directors Networks
+
+-   We get all the connected components.
+
+-   We extract the giant component
+
+-   We get measures on both overall networks and the giant component
+
+## Results
+
+![Firm Network](Firm2023.png){fig-align="center"}
+
+## Components
+
+Component Size and the Number of components
+
+|     |     |     |     |     |     |     |     |     |     |
+|-----|-----|-----|-----|-----|-----|-----|-----|-----|-----|
+| 1   | 2   | 3   | 4   | 5   | 6   | 7   | 8   | 9   | 231 |
+| 215 | 42  | 11  | 3   | 2   | 3   | 1   | 1   | 2   | 1   |
+
+## Giant Component
+
+![](FGC2003.png){fig-align="center"}
+
+## Directors Giant Component
+
+![](DGC.png){fig-align="center"}
+
+## Small World Measures of Firm Giant Component
+
+-   Average path length : 6.73
+
+-   Clustering coefficient: 0.567
+
+-   Density: 0.022
+
+-   Relative Size of the Giant Component: 0.36
+
+## Firm Degree Centrality
+
+| Firm                                           | Degree |
+|------------------------------------------------|--------|
+| YAPI VE KREDİ BANKASI A.Ş.                     | 21     |
+| DOĞAN ŞİRKETLER GRUBU HOLDİNG A.Ş.             | 19     |
+| GÖZDE GİRİŞİM SERMAYESİ YATIRIM ORTAKLIĞI A.Ş. | 18     |
+| FENERBAHÇE FUTBOL A.Ş.                         | 17     |
+| TAT GIDA SANAYİ A.Ş.                           | 17     |
+
+## Director Degree Centrality
+
+| Firm              | Degree |
+|-------------------|--------|
+| LEVENT ÇAKIROĞLU  | 75     |
+| YILDIRIM ALİ KOÇ  | 73     |
+| AGAH UĞUR         | 47     |
+| MEHMET ÖMER KOÇ   | 43     |
+| MUSTAFA RAHMİ KOÇ | 39     |
+
+## Centralities II
+
+-   Eigenvector centrality ( similar to page-rank): TÜPRAŞ-TÜRKİYE PETROL RAFİNERİLERİ A.Ş.
+
+-   Betweenness centrality: DOĞAN ŞİRKETLER GRUBU HOLDİNG A.Ş.
+
+-   Eigenvector centrality: TUNCAY ÖZİLHAN
+
+-   Betweenness centrality: AGAH UĞUR
+
+## Discussion
+
+-   Interlocking directorship networks of Brazil, Chile, Israel, South Korea and Taiwan.
+
+    All of these countries are dominated by business groups as in Turkey.
+
+-   By early 2000s compared to mid 1990s, Brazil, Chile and Taiwan became more of a small world.
+
+-   But Israel and South Korea moved in the opposite direction, as their networks had become more fragmented.
+
+-   Türkiye is rather strange with the stability of weak cohesiveness.
+
+## Further Research
+
+-   Web scrape data on 2800 firms at <https://e-sirket.mkk.com.tr/#s>
+
+-   Come up with a model to explain the relative stability in terms of cohesiveness; the share of giant component in the overall firm network
+
+-   Figure out the effects of independent directors on the network structure
+
+-   Get balance sheet data and examine whether more central firms differ in terms performance
+
+## Persistence
+
+|                 |      |      |      |
+|-----------------|------|------|------|
+| Firms           | 2002 | 2007 | 2013 |
+| Giant Component | 101  | 100  | 157  |
+| Stay 2002-2007  | 50   |      |      |
+| Stay 2007-2013  |      | 72   |      |
+
+|                 |      |      |      |
+|-----------------|------|------|------|
+| Directors       | 2002 | 2007 | 2013 |
+| Giant Component | 498  | 530  | 964  |
+| Stay 2002-2007  | 131  |      |      |
+| Stay 2007-2013  |      | 185  |      |
